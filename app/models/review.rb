@@ -14,6 +14,14 @@ class Review
 
 
   def movie
+    sql = <<-SQL
+      SELECT movies.title
+      FROM movies
+      INNER JOIN reviews
+      ON movies.id = reviews.movie_id
+      WHERE reviews.id = ?
+    SQL
+    self.class.db.execute(sql, self.id)
   end
 
 end
